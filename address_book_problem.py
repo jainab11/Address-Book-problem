@@ -51,9 +51,12 @@ class AddContacts:
         if not self.contacts:
             print("No contacts found in the address book.")
         else:
-            for contact in self.contacts:
+            sorted_contacts = sorted(self.contacts, key=lambda x: x.first_name.lower())
+
+            for contact in sorted_contacts:
                 contact.display()
                 print()
+                
 #  find contact funtion to check if nam ei there or not to perfom oprtions
     def find_contact(self, first_name, last_name):
         for contact in self.contacts:
