@@ -8,6 +8,7 @@
 
 @Title : Address book problem
 '''
+from collections import defaultdict
 class CreateContact:
     def __init__(self):
         self.first_name = input("Enter your first name: ")
@@ -66,6 +67,7 @@ class MultipleAddressBook:
     def __init__(self):
         # using dictionary to store address book name as key and contacts as value
         self.address_books = {}
+        self.city_dict = defaultdict(list)
 
     def add_address_book(self, name):
         if name.lower() not in self.address_books:
@@ -83,10 +85,11 @@ class MultipleAddressBook:
     def searc_person(self,city):
         city = input("enter name of city")
         result =[]
-        for address_book in self.address_book.values():
+        for address_book in self.address_books.values():
             for contact in address_book.contacts:
                 if contact.city.lower()== city.lower():
                     result.append(contact)
+                    self.city_dict[city].append(contact)
         return result
                     
 
@@ -125,7 +128,7 @@ def main():
         print("1. Add New Address Book")
         print("2. Select Address Book")
         print("3. search by city")
-        print("4. search by state")
+        print("4. display address by city")
         print("5. Exit")
         choice = input("Enter your choice: ")
 
@@ -138,7 +141,7 @@ def main():
             address_book = address_book_system.get_address_book(name)
             if address_book:
                 while True:
-                    print(f"\n____________{name.upper()} ADDRESS BOOK____________________")
+                    print(f"____________{name.upper()} ADDRESS BOOK____________________")
                     print("1. Add New Contact")
                     print("2. Display all contacts")
                     print("3. Edit contact")
@@ -167,17 +170,25 @@ def main():
 
             else:
                 print("Address book not found.")
-        elif choice == '5':
+        elif choice == '3':
             city = input("Enter the city name to search: ")
-            results = address_book_system.search_by_city(city)
+            results = address_book_system.searc_person(city)
             if results:
                 print("Search Results:")
                 for contact in results:
                     contact.display()
             else:
                 print("No matching contacts found.")
-            
         elif choice == '4':
+            city = input("Enter your city name: ")
+            result = address_book_system.city_dict.get(city.lower())
+            if result:
+                for contact in result:
+                    contact.display()
+            else:
+                print("No contacts found in this city.")
+            
+        elif choice == '5':
             print("Exiting the Address Book System.")
             break
 
