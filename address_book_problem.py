@@ -60,6 +60,7 @@ class AddContacts:
                 return contact
         return None
 
+
 # add multiple address book
 class MultipleAddressBook:
     def __init__(self):
@@ -78,7 +79,16 @@ class MultipleAddressBook:
 
     def get_address_book(self, name):
         return self.address_books.get(name.lower())
-
+    
+    def searc_person(self,city):
+        city = input("enter name of city")
+        result =[]
+        for address_book in self.address_book.values():
+            for contact in address_book.contacts:
+                if contact.city.lower()== city.lower():
+                    result.append(contact)
+        return result
+                    
 
 class EditContact:
     def edit_contact(self, address_book):
@@ -114,7 +124,9 @@ def main():
         print("\n____________WELCOME TO ADDRESS BOOK SYSTEM____________________")
         print("1. Add New Address Book")
         print("2. Select Address Book")
-        print("3. Exit")
+        print("3. search by city")
+        print("4. search by state")
+        print("5. Exit")
         choice = input("Enter your choice: ")
 
         if choice == '1':
@@ -155,8 +167,17 @@ def main():
 
             else:
                 print("Address book not found.")
-
-        elif choice == '3':
+        elif choice == '5':
+            city = input("Enter the city name to search: ")
+            results = address_book_system.search_by_city(city)
+            if results:
+                print("Search Results:")
+                for contact in results:
+                    contact.display()
+            else:
+                print("No matching contacts found.")
+            
+        elif choice == '4':
             print("Exiting the Address Book System.")
             break
 
@@ -166,3 +187,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+ 
