@@ -33,9 +33,22 @@ class CreateContact:
 class AddContacts:
     def __init__(self):
         self.contacts = []
-
+    def unique_contact(self,first_name,last_name):
+        self.first_name = input("Enter your first name: ")
+        self.last_name = input("Enter yur last name :")
+        for contact in self.contacts:
+            if contact.first_name.lower()== first_name.lower() and contact.last_name.lower() == last_name.lower():
+                print("Contact Exist")
+            return False
+        return True
+                
+    
     def add_contact(self, contact):
-        self.contacts.append(contact)
+        if self.unique_contact(contact.first_name,contact.last_name):
+            self.contact.append(contact)
+            print("Contact added ")
+        else:
+            print("Contact exists ")
 
     def display_contacts(self):
         if not self.contacts:
@@ -46,10 +59,16 @@ class AddContacts:
                 print()
 
     def find_contact(self, first_name, last_name):
-        for contact in self.contacts:
-            if contact.first_name.lower() == first_name.lower() and contact.last_name.lower() == last_name.lower():
+        try:
+            for contact in self.contacts:
+             if contact.first_name.lower() == first_name.lower() and contact.last_name.lower() == last_name.lower():
                 return contact
-        return None
+        except StopIteration:
+            return None
+    ''''Refactor to add multiple Address Book to the System. Each Address Book has a unique Name'''
+
+ 
+
 
 
 class EditContact:
