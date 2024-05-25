@@ -23,7 +23,7 @@ class CreateContact:
         print(f"Email: {self.email}")
 
 
-''''
+'''
 Use case 2 : Ability to add a new Contact to Address Book Use Console to add person details from 
 AddressBookMain class Use Object Oriented Concepts to manage 
 relationship between AddressBook and Contact 
@@ -32,38 +32,78 @@ Person
 class AddContacts:
     def __init__(self):
         self.contacts = []
-        
-    def add_contacts(self,contact):
+
+    def add_contacts(self, contact):
         self.contacts.append(contact)
-    def contact_show(self):
-        if not  self.contacts:
-            print("Contat not found in address book")
+
+    def display_contacts(self):
+        if not self.contacts:
+            print("No contacts found in the address book.")
         else:
             for contact in self.contacts:
                 contact.display()
                 print()
+                
+    def find_contact(self,first_name,last_name):
+        for index, contact in enumerate(self.contacts):
+            if first_name.lower() == contact.first_name.lower() and last_name.lower() == contact.last_name.lower():
+                return index
+        return None
+            
+                
         
+''' Use Case 3:
+Ability to edit existing contact person using their name
+'''
+class EditContact:
+    
+    def __init__(self):
+        pass
+    def edit_contact(self,contacts):
+        first_name = input("Enter your first name : ")
+        last_name = input("Enter your last name : ")
+        email = input("Enter your email id : ")
+        phone = input("Enter your Phone number : ")
         
+        for contact in contacts:
+            if contact.first_name.lower() == first_name.lower() and contact.last_name.lower() == last_name.lower():
+                contact.phone = phone
+                contact.email = email
+                
+                print("Contact updated successfully.")
+                return
+
+        print("Contact not found.")
+        
+                  
 def main():
-    new_contact = AddContacts()  # Instantiate AddContacts object
+    address_book = AddContacts()  # Instantiate AddContacts object
+    edit_contact = EditContact()  # Instantiate EditContact objec
 
     while True:
         print("____________WELCOME TO ADDRESS BOOK____________________")
         print("1. Add New Contact")
-        print("2. Exit")
+        print("2. Display all contacts")
+        print("3. Edit contact")
+        print("4. Exit")
         choice = input("Enter your choice: ")
 
         if choice == '1':
-        #    for adding new contact 
-            contact = CreateContact()
-            new_contact.add_contacts(contact) # this is an instance of a class add contact
-            print("Contact added ")
-        elif choice == '2':
-            break
-            exit()            
-        else:
-            print("Invalid choice. Please try again.")
+            contact = CreateContact()  # Create new contact
+            address_book.add_contacts(contact)  # Add contact to address book
+            print("Contact added successfully.")
 
+        elif choice == '2':
+            # Display all contacts
+            address_book.display_contacts()  
+
+        elif choice == '3':
+            # Edit existing contact
+            edit_contact.edit_contact(address_book.contacts)  
+
+        elif choice == '4':
+            print("Exiting the Address Book Program. Goodbye!")
+            break
 
 if __name__ == "__main__":
     main()
