@@ -26,24 +26,23 @@ class AddressBookProblem:
     """"Ability to create a Contacts in Address Book with first and last names, address, 
     city, state, zip, phone number and email"""
     
-    # for contact
     def __init__(self):
         self.contacts = []
-    def create_contact(self,contact = None):
+
+    def create_contact(self, contact=None):
         if contact is None:
-          
-            contact = {}
-            contact["first_name"] = input("Enter your first name :"),
-            contact["last_name"] = input("Enter your last name: "),
-            contact["address"] = input("Enter your address: "),
-            contact["city"] = input("Enter your city nmae : "),
-            contact["state"] = input("Enter your State : "),
-            contact["zip"] = input("Enter your zip code : "),
-            contact["phone_number"] = input("Enter your phone Number : "),
-            contact["email"] = input("Enter your email : ")
-        
+            contact = {
+                "first_name": input("Enter your first name: "),
+                "last_name": input("Enter your last name: "),
+                "address": input("Enter your address: "),
+                "city": input("Enter your city name: "),
+                "state": input("Enter your state: "),
+                "zip": input("Enter your zip code: "),
+                "phone_number": input("Enter your phone number: "),
+                "email": input("Enter your email: ")
+            }
             self.contacts.append(contact)
-            print("\n Thankyou for entering details")
+            print("\nThank you for entering details")
         else:
             # Reuse existing contact information for editing
             contact["address"] = input(f"Enter new address [{contact['address']}]: ") or contact["address"]
@@ -54,60 +53,64 @@ class AddressBookProblem:
             contact["email"] = input(f"Enter new email [{contact['email']}]: ") or contact["email"]
             print("\nContact updated")
 
-        
-    # for displaying contact    
     def display_contact(self):
-        try:
-            if not self.contact:
-                print("No contact is present")
-            else:
-                for contact in self.contacts:
-                    print(f"Name: {contact['first_name']} {contact['last_name']}")
-                    print(f"Address: {contact['address']}")
-                    print(f"City: {contact['city']}")
-                    print(f"State: {contact['state']}")
-                    print(f"Zip Code: {contact['zip_code']}")
-                    print(f"Phone Number: {contact['phone_number']}")
-                    print(f"Email: {contact['email']}\n")
-        except Exception as e :
-            print("An error occured ", e)
+        if not self.contacts:
+            print("No contact is present")
+        else:
+            for contact in self.contacts:
+                print(f"Name: {contact['first_name']} {contact['last_name']}")
+                print(f"Address: {contact['address']}")
+                print(f"City: {contact['city']}")
+                print(f"State: {contact['state']}")
+                print(f"Zip Code: {contact['zip']}")
+                print(f"Phone Number: {contact['phone_number']}")
+                print(f"Email: {contact['email']}\n")
+
     def edit_contact(self):
-        first_name = input("Enter your first name : ")
-        last_name = input("enter your last name:  ")
+        first_name = input("Enter your first name: ")
+        last_name = input("Enter your last name: ")
         for contact in self.contacts:
             if contact["first_name"].lower() == first_name.lower() and contact["last_name"].lower() == last_name.lower():
                 self.create_contact(contact)
-                print("\ncontact updated")
                 return
-            else:
-                print("no contact found ")
-                 
+        print("No contact found")
+
+    def delete_contact(self):
+        first_name = input("Enter your first name: ")
+        last_name = input("Enter your last name: ")
+        for contact in self.contacts:
+            if contact["first_name"].lower() == first_name.lower() and contact["last_name"].lower() == last_name.lower():
+                self.contacts.remove(contact)
+                print("Contact removed")
+                return
+        print("No contact found")
         
 def main():
     address_book_system = AddressBookProblem()
-    print("\n****_____WELCOME TO ADDRESS BOOK PROBLEM_____*****" )
+    print("\n****_____WELCOME TO ADDRESS BOOK PROBLEM_____*****")
     print("\n")
-    # creating options
     while True:
         print("\n OPTIONS :- ")
-        print("1.EXIT")        
-        print("2.ADD NEW CONTACT")
-        print("3.DISPLAY CONTACT ")
-        print("4.EDIT CONTACT")
-        choice = input("Enter your choice in numbers : ")
+        print("1. EXIT")        
+        print("2. ADD NEW CONTACT")
+        print("3. DISPLAY CONTACT")
+        print("4. EDIT CONTACT")
+        print("5. DELETE CONTACT")
+        choice = input("Enter your choice in numbers: ")
         if choice == '1':
             print("Exiting the program")
             break
         elif choice == '2':
-            print("\n Add your details :")
+            print("\nAdd your details:")
             address_book_system.create_contact()
         elif choice == '3':
             address_book_system.display_contact()
         elif choice == '4':
             address_book_system.edit_contact()
+        elif choice == '5':
+            address_book_system.delete_contact()
         else:
-            print("\n INVALID CHOICE, TRY AGAIN ")
-        
-    
-if __name__ =="__main__":
+            print("\nINVALID CHOICE, TRY AGAIN")
+
+if __name__ == "__main__":
     main()
