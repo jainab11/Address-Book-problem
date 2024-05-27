@@ -1,109 +1,96 @@
-# this calss is for taking input from user for address book
-'''Ability to create a Contacts in Address Book with
-first and last names, address, city, state, zip, phone number and email '''
-class CreateContact:
-    def __init__(self):
-        self.first_name = input("Enter your first name : ")
-        self.last_name = input("Enter your last name : ")
-        self.address = input("Enter your address : ")
-        self.email = input("Enter your email id : ")
-        self.phone = input("Enter your Phone number : ")
-        self.city = input("Enter your city name : ")
-        self.state = input("Enter your state name :")
-        self.zip_code = input("Enter your area zip code : ")
-    # function to display input
-    def display(self):
-        print("Contact Information:")
-        print(f"Name: {self.first_name} {self.last_name}")
-        print(f"Address: {self.address}")
-        print(f"City: {self.city}")
-        print(f"State: {self.state}")
-        print(f"ZIP Code: {self.zip_code}")
-        print(f"Phone Number: {self.phone}")
-        print(f"Email: {self.email}")
+'''@Author: Sheikh jainab
 
+@Date: 2024-24-05 
+
+@Last Modified by: Author Name
+
+@Last Modified time: 2024- 27-05
+
+@Title : Address book problem
 
 '''
-Use case 2 : Ability to add a new Contact to Address Book Use Console to add person details from 
-AddressBookMain class Use Object Oriented Concepts to manage 
-relationship between AddressBook and Contact 
-Person
-'''
-class AddContacts:
+""""
+UC 1-4: Basic functionalities such as adding, editing, and deleting contacts in the address book.
+UC 5: Adding support for multiple address books.
+UC 6: Implementing duplicate entry checks.
+UC 7: Searching for a person in a city or state across multiple address books.
+UC 8: Viewing persons by city or state and maintaining dictionaries for efficient lookup.
+UC 9: Getting the count of contact persons by city or state.
+UC 10: Sorting entries alphabetically by person's name.
+UC 11: Sorting entries by city, state, or zip code.
+UC 12: Reading from and writing to a file using Java file I/O.
+UC 13: Reading from and writing to a CSV file using the OpenCSV library.
+UC 14: Reading from and writing to a JSON file using the GSON library.
+"""
+class AddressBookProblem:
+    """"Ability to create a Contacts in Address Book with first and last names, address, 
+    city, state, zip, phone number and email"""
+    
+    # for contact
     def __init__(self):
         self.contacts = []
-
-    def add_contacts(self, contact):
+    def create_contact(self):
+        first_name = input("Enter your first name :")
+        last_name = input("Enter your last name: ")
+        address = input("Enter your address: ")
+        city = input("Enter your city nmae : ")
+        state = input("Enter your State : ")
+        zip = input("Enter your zip code : ")
+        phone_number = input("Enter your phone Number : ")
+        email = input("Enter your email : ")
+        contact = {
+                "first_name": first_name,
+                "last_name": last_name,
+                "address": address,
+                "city": city,
+                "state": state,
+                "zip": zip,
+                "phone_number": phone_number,
+                "email": email
+            }
         self.contacts.append(contact)
+        print("\n Thankyou for entering details")
 
-    def display_contacts(self):
-        if not self.contacts:
-            print("No contacts found in the address book.")
-        else:
-            for contact in self.contacts:
-                contact.display()
-                print()
-                
-    def find_contact(self,first_name,last_name):
-        for index, contact in enumerate(self.contacts):
-            if first_name.lower() == contact.first_name.lower() and last_name.lower() == contact.last_name.lower():
-                return index
-        return None
-            
-                
         
-''' Use Case 3:
-Ability to edit existing contact person using their name
-'''
-class EditContact:
-    
-    def __init__(self):
-        pass
-    def edit_contact(self,contacts):
-        first_name = input("Enter your first name : ")
-        last_name = input("Enter your last name : ")
-        email = input("Enter your email id : ")
-        phone = input("Enter your Phone number : ")
+    # for displaying contact    
+    def display_contact(self):
+        try:
+            if not self.contact:
+                print("No contact is present")
+            else:
+                for contact in self.contacts:
+                    print(f"Name: {contact['first_name']} {contact['last_name']}")
+                    print(f"Address: {contact['address']}")
+                    print(f"City: {contact['city']}")
+                    print(f"State: {contact['state']}")
+                    print(f"Zip Code: {contact['zip_code']}")
+                    print(f"Phone Number: {contact['phone_number']}")
+                    print(f"Email: {contact['email']}\n")
+        except Exception as e :
+            print("An error occured ", e)
         
-        for contact in contacts:
-            if contact.first_name.lower() == first_name.lower() and contact.last_name.lower() == last_name.lower():
-                contact.phone = phone
-                contact.email = email
-                
-                print("Contact updated successfully.")
-                return
-
-        print("Contact not found.")
-        
-                  
 def main():
-    address_book = AddContacts()  # Instantiate AddContacts object
-    edit_contact = EditContact()  # Instantiate EditContact objec
-
+    address_book_system = AddressBookProblem()
+    print("\n****_____WELCOME TO ADDRESS BOOK PROBLEM_____*****" )
+    print("\n")
+    # creating options
     while True:
-        print("____________WELCOME TO ADDRESS BOOK____________________")
-        print("1. Add New Contact")
-        print("2. Display all contacts")
-        print("3. Edit contact")
-        print("4. Exit")
-        choice = input("Enter your choice: ")
-
+        print("\n OPTIONS :- ")
+        print("1.EXIT")        
+        print("2.ADD NEW CONTACT")
+        print("3.DISPLAY CONTACT ")
+        choice = input("Enter your choice in numbers : ")
         if choice == '1':
-            contact = CreateContact()  # Create new contact
-            address_book.add_contacts(contact)  # Add contact to address book
-            print("Contact added successfully.")
-
-        elif choice == '2':
-            # Display all contacts
-            address_book.display_contacts()  
-
-        elif choice == '3':
-            # Edit existing contact
-            edit_contact.edit_contact(address_book.contacts)  
-
-        elif choice == '4':
-            print("Exiting the Address Book Program. Goodbye!")
+            print("Exiting the program")
             break
-
-if __name__ == "__main__":
+        elif choice == '2':
+            print("\n Add your details :")
+            address_book_system.create_contact()
+        elif choice == '3':
+            address_book_system.display_contact()
+        else:
+            print("\n INVALID CHOICE, TRY AGAIN ")
+        
+    
+if __name__ =="__main__":
     main()
