@@ -29,27 +29,30 @@ class AddressBookProblem:
     # for contact
     def __init__(self):
         self.contacts = []
-    def create_contact(self):
-        first_name = input("Enter your first name :")
-        last_name = input("Enter your last name: ")
-        address = input("Enter your address: ")
-        city = input("Enter your city nmae : ")
-        state = input("Enter your State : ")
-        zip = input("Enter your zip code : ")
-        phone_number = input("Enter your phone Number : ")
-        email = input("Enter your email : ")
-        contact = {
-                "first_name": first_name,
-                "last_name": last_name,
-                "address": address,
-                "city": city,
-                "state": state,
-                "zip": zip,
-                "phone_number": phone_number,
-                "email": email
-            }
-        self.contacts.append(contact)
-        print("\n Thankyou for entering details")
+    def create_contact(self,contact = None):
+        if contact is None:
+          
+            contact = {}
+            contact["first_name"] = input("Enter your first name :"),
+            contact["last_name"] = input("Enter your last name: "),
+            contact["address"] = input("Enter your address: "),
+            contact["city"] = input("Enter your city nmae : "),
+            contact["state"] = input("Enter your State : "),
+            contact["zip"] = input("Enter your zip code : "),
+            contact["phone_number"] = input("Enter your phone Number : "),
+            contact["email"] = input("Enter your email : ")
+        
+            self.contacts.append(contact)
+            print("\n Thankyou for entering details")
+        else:
+            # Reuse existing contact information for editing
+            contact["address"] = input(f"Enter new address [{contact['address']}]: ") or contact["address"]
+            contact["city"] = input(f"Enter new city [{contact['city']}]: ") or contact["city"]
+            contact["state"] = input(f"Enter new state [{contact['state']}]: ") or contact["state"]
+            contact["zip"] = input(f"Enter new zip code [{contact['zip']}]: ") or contact["zip"]
+            contact["phone_number"] = input(f"Enter new phone number [{contact['phone_number']}]: ") or contact["phone_number"]
+            contact["email"] = input(f"Enter new email [{contact['email']}]: ") or contact["email"]
+            print("\nContact updated")
 
         
     # for displaying contact    
@@ -68,6 +71,17 @@ class AddressBookProblem:
                     print(f"Email: {contact['email']}\n")
         except Exception as e :
             print("An error occured ", e)
+    def edit_contact(self):
+        first_name = input("Enter your first name : ")
+        last_name = input("enter your last name:  ")
+        for contact in self.contacts:
+            if contact["first_name"].lower() == first_name.lower() and contact["last_name"].lower() == last_name.lower():
+                self.create_contact(contact)
+                print("\ncontact updated")
+                return
+            else:
+                print("no contact found ")
+                 
         
 def main():
     address_book_system = AddressBookProblem()
@@ -79,6 +93,7 @@ def main():
         print("1.EXIT")        
         print("2.ADD NEW CONTACT")
         print("3.DISPLAY CONTACT ")
+        print("4.EDIT CONTACT")
         choice = input("Enter your choice in numbers : ")
         if choice == '1':
             print("Exiting the program")
@@ -88,6 +103,8 @@ def main():
             address_book_system.create_contact()
         elif choice == '3':
             address_book_system.display_contact()
+        elif choice == '4':
+            address_book_system.edit_contact()
         else:
             print("\n INVALID CHOICE, TRY AGAIN ")
         
