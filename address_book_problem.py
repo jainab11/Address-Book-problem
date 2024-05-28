@@ -50,7 +50,7 @@ class AddressBookProblem:
             contact["city"] = input(f"Enter new city [{contact['city']}]: ") or contact["city"]
             contact["state"] = input(f"Enter new state [{contact['state']}]: ") or contact["state"]
             contact["zip"] = input(f"Enter new zip code [{contact['zip']}]: ") or contact["zip"]
-            contact["phone_number"] = input(f"Enter new phone number [{contact['phone_number']}]: ") or contact["phone_number"]
+            contact["phone_number"] = input(f" Enter new phone number [{contact['phone_number']}]: ") or contact["phone_number"]
             contact["email"] = input(f"Enter new email [{contact['email']}]: ") or contact["email"]
             print("\nContact updated")
 
@@ -86,8 +86,20 @@ class AddressBookProblem:
                 return
         print("No contact found")
         
+    # search by city
+    def search_city(self):
+        city = input("enter city name :").strip()
+        found =False
+        for contact in self.contacts:
+            if contact["city"].lower() == city.lower():
+                print(self.display_contact)
+                found = True
+        if not found:
+                print("No Contact is present ")
+                
+        
 
-# creatinf a new class and using it as creating new book
+# creating a new class and using it as creating new book
 class NewAddressBook:
     def __init__(self) -> None:
         self.books= {}
@@ -100,7 +112,15 @@ class NewAddressBook:
             print(" New book created")
     def get_book(self,book_name):
         return self.books.get(book_name,None)
-        
+    
+    def duplicate_entry(self,contact):
+        first_name = input("Enter your first name: ")
+        last_name = input("Enter your last name: ")
+        for contact in self.contacts:
+                if (contact['first_name'].lower() == first_name.lower() and 
+                        contact['last_name'].lower() == last_name.lower()):
+                    print("Contact with this name already exists.")
+                    return    
         
         
 def main():
@@ -117,12 +137,13 @@ def main():
         print("5. DELETE CONTACT")
         print("6. ADD NEW ADDRESS BOOK")
         print("7. ADD DETAILS TO ADDRESS BOOK ")
+        print("8. SEARCH BY CITY")
         choice = input("Enter your choice in numbers: ")
         if choice == '1':
             print("Exiting the program")
             break
         elif choice == '2':
-            print("\nAdd your details:")
+            print("\n Add your details:")
             address_book_system.create_contact()
         elif choice == '3':
             address_book_system.display_contact()
@@ -145,9 +166,11 @@ def main():
                         print("Exit")
                         break
                     elif sub_choice == '2':
-                        book.creat_contact()
+                        book.create_contact()
                     else:
                         print("INVALID INPUT ")
+        elif choice == '8':
+            address_book_system.search_city()
                        
                     
         else:
