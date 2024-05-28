@@ -96,6 +96,9 @@ class AddressBookProblem:
                 found = True
         if not found:
                 print("No Contact is present ")
+    
+    def view_by_city(self):
+        pass
                 
         
 
@@ -111,6 +114,7 @@ class NewAddressBook:
             self.books[book_name] = AddressBookProblem()
             print(" New book created")
     def get_book(self,book_name):
+        print(book_name)
         return self.books.get(book_name,None)
     
     def duplicate_entry(self,contact):
@@ -166,6 +170,10 @@ def main():
                         print("Exit")
                         break
                     elif sub_choice == '2':
+                        print("Availabe contact books are ")
+                        new_address_book.get_book()
+                        print("enter your address book details ")
+                        
                         book.create_contact()
                     else:
                         print("INVALID INPUT ")
