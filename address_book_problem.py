@@ -119,8 +119,13 @@ class AddressBookProblem:
         #  using lambda function 
         sorted_contacts =sorted(self.contacts,key=lambda x:x["first_name"].lower())
         return sorted_contacts
+    
+    def sort_by_city(self):
+        sorted_contacts = sorted(self.contacts,key=lambda x:x["city","zip","state"].lower())
+        return sorted_contacts
               
-
+    # sorted_contacts = sorted(self.contacts, key=lambda x: (x["city"].lower(), x["zip"].lower(), x["state"].lower()))
+    
 # creating a new class and using it as creating new book
 class NewAddressBook:
     def __init__(self) -> None:
@@ -144,8 +149,8 @@ class NewAddressBook:
                         contact['last_name'].lower() == last_name.lower()):
                     print("Contact with this name already exists.")
                     return  
+
     
-        
         
 def main():
     address_book_system = AddressBookProblem()
@@ -164,6 +169,7 @@ def main():
         print("8.  SEARCH BY CITY")
         print("9.  COUNT PERSON")
         print("10. PRINT CONTACT IN SORTED ORDER")
+        print("11. SORTED BY CITY NAME")
         choice = input("Enter your choice in numbers: ")
         if choice == '1':
             print("Exiting the program")
@@ -210,11 +216,13 @@ def main():
             for contact in sorted_contacts:
                 print(contact)
         elif choice =='11':
-            pass
-        elif choice =='12':
-            pass
-                       
-                    
+            sorted_contacts = address_book_system.sort_by_city()
+            print("Sorted contacts:")
+            for contact in sorted_contacts:
+                print(contact)
+            
+        
+                                                        
         else:
             print("\n INVALID CHOICE, TRY AGAIN")
 
