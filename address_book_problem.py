@@ -1,3 +1,4 @@
+
 '''@Author: Sheikh jainab
 
 @Date: 2024-24-05 
@@ -85,8 +86,26 @@ class AddressBookProblem:
                 return
         print("No contact found")
         
+
+# creatinf a new class and using it as creating new book
+class NewAddressBook:
+    def __init__(self) -> None:
+        self.books= {}
+    def new_book(self):
+        book_name = input("please Entername of your book  : ")
+        if book_name == self.books:
+            print("")
+        else:
+            self.books[book_name] = AddressBookProblem()
+            print(" New book created")
+    def get_book(self,book_name):
+        return self.books.get(book_name,None)
+        
+        
+        
 def main():
     address_book_system = AddressBookProblem()
+    new_address_book = NewAddressBook()
     print("\n****_____WELCOME TO ADDRESS BOOK PROBLEM_____*****")
     print("\n")
     while True:
@@ -96,6 +115,8 @@ def main():
         print("3. DISPLAY CONTACT")
         print("4. EDIT CONTACT")
         print("5. DELETE CONTACT")
+        print("6. ADD NEW ADDRESS BOOK")
+        print("7. ADD DETAILS TO ADDRESS BOOK ")
         choice = input("Enter your choice in numbers: ")
         if choice == '1':
             print("Exiting the program")
@@ -109,6 +130,28 @@ def main():
             address_book_system.edit_contact()
         elif choice == '5':
             address_book_system.delete_contact()
+        elif choice == '6':
+            new_address_book.new_book()
+        elif choice == '7':
+            book_name = input(" Enter a book name you want to use : ")
+            book = new_address_book.get_book(book_name)
+            
+            if book:
+                while True:
+                    print("1. EXIT")        
+                    print("2. ADD NEW CONTACT")
+                    sub_choice = input("enter your choice :")
+                    if sub_choice == '1':
+                        print("Exit")
+                        break
+                    elif sub_choice == '2':
+                        book.creat_contact()
+                    else:
+                        print("INVALID INPUT ")
+                        
+                        
+            
+                    
         else:
             print("\nINVALID CHOICE, TRY AGAIN")
 
