@@ -106,14 +106,20 @@ class AddressBookProblem:
         if not found:
                 print("No person is present ")
         
-    def count_person(self, contact):
-        count = 0
-        city = input("enter name of youe city : ").strip()
-        for c in self.contacts:
-              if c["city"].lower() == city.lower():
-                count += 1
-        return count            
+    def count_person(self):
         
+        count = 0
+        city = input("Enter name of your city: ").strip()
+        for c in self.contacts:
+            if c["city"].lower() == city.lower():
+                count += 1
+        return count
+
+    def sort_name(self):
+        #  using lambda function 
+        sorted_contacts =sorted(self.contacts,key=lambda x:x["first_name"].lower())
+        return sorted_contacts
+              
 
 # creating a new class and using it as creating new book
 class NewAddressBook:
@@ -148,15 +154,16 @@ def main():
     print("\n")
     while True:
         print("\n OPTIONS :- ")
-        print("1. EXIT")        
-        print("2. ADD NEW CONTACT")
-        print("3. DISPLAY CONTACT")
-        print("4. EDIT CONTACT")
-        print("5. DELETE CONTACT")
-        print("6. ADD NEW ADDRESS BOOK")
-        print("7. ADD DETAILS TO ADDRESS BOOK ")
-        print("8. SEARCH BY CITY")
-        print("9 COUNT PERSON")
+        print("1.  EXIT")        
+        print("2.  ADD NEW CONTACT")
+        print("3.  DISPLAY CONTACT")
+        print("4.  EDIT CONTACT")
+        print("5.  DELETE CONTACT")
+        print("6.  ADD NEW ADDRESS BOOK")
+        print("7.  ADD DETAILS TO ADDRESS BOOK ")
+        print("8.  SEARCH BY CITY")
+        print("9.  COUNT PERSON")
+        print("10. PRINT CONTACT IN SORTED ORDER")
         choice = input("Enter your choice in numbers: ")
         if choice == '1':
             print("Exiting the program")
@@ -194,6 +201,18 @@ def main():
                         print("INVALID INPUT ")
         elif choice == '8':
             address_book_system.search_city()
+        elif choice =='9':
+            count = address_book_system.count_person()
+            print(f"Total count: {count}")
+        elif choice =='10':
+            sorted_contacts = address_book_system.sort_name()
+            print("Sorted contacts:")
+            for contact in sorted_contacts:
+                print(contact)
+        elif choice =='11':
+            pass
+        elif choice =='12':
+            pass
                        
                     
         else:
