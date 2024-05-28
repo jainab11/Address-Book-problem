@@ -92,9 +92,9 @@ class NewAddressBook:
     def __init__(self) -> None:
         self.books= {}
     def new_book(self):
-        book_name = input("please Entername of your book  : ")
+        book_name = input("please Enter name of your book  : ")
         if book_name == self.books:
-            print("")
+            print(" Book present already")
         else:
             self.books[book_name] = AddressBookProblem()
             print(" New book created")
@@ -148,9 +148,7 @@ def main():
                         book.creat_contact()
                     else:
                         print("INVALID INPUT ")
-                        
-                        
-            
+                       
                     
         else:
             print("\nINVALID CHOICE, TRY AGAIN")
