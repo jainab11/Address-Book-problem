@@ -106,7 +106,13 @@ class AddressBookProblem:
         if not found:
                 print("No person is present ")
         
-                
+    def count_person(self, contact):
+        count = 0
+        city = input("enter name of youe city : ").strip()
+        for c in self.contacts:
+              if c["city"].lower() == city.lower():
+                count += 1
+        return count            
         
 
 # creating a new class and using it as creating new book
@@ -131,7 +137,8 @@ class NewAddressBook:
                 if (contact['first_name'].lower() == first_name.lower() and 
                         contact['last_name'].lower() == last_name.lower()):
                     print("Contact with this name already exists.")
-                    return    
+                    return  
+    
         
         
 def main():
@@ -149,6 +156,7 @@ def main():
         print("6. ADD NEW ADDRESS BOOK")
         print("7. ADD DETAILS TO ADDRESS BOOK ")
         print("8. SEARCH BY CITY")
+        print("9 COUNT PERSON")
         choice = input("Enter your choice in numbers: ")
         if choice == '1':
             print("Exiting the program")
