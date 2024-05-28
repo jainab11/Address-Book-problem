@@ -98,7 +98,14 @@ class AddressBookProblem:
                 print("No Contact is present ")
     
     def view_by_city(self):
-        pass
+        city = input("enter city name :").strip()
+        found =False
+        for contact in self.contacts:
+            if contact["city"].lower() == city.lower():
+                print(f"Yes, there is a person in this {city} .")
+        if not found:
+                print("No person is present ")
+        
                 
         
 
@@ -182,7 +189,7 @@ def main():
                        
                     
         else:
-            print("\nINVALID CHOICE, TRY AGAIN")
+            print("\n INVALID CHOICE, TRY AGAIN")
 
 if __name__ == "__main__":
     main()
