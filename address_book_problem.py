@@ -5,12 +5,13 @@
 
 @Last Modified by: Author Name
 
-@Last Modified time: 2024- 27-05
+@Last Modified time: 2024-27-05
 
-@Title : Address book problem
+@Title: Address book problem
 
 '''
-""""
+import file_handler
+"""
 UC 1-4: Basic functionalities such as adding, editing, and deleting contacts in the address book.
 UC 5: Adding support for multiple address books.
 UC 6: Implementing duplicate entry checks.
@@ -23,10 +24,11 @@ UC 12: Reading from and writing to a file using Java file I/O.
 UC 13: Reading from and writing to a CSV file using the OpenCSV library.
 UC 14: Reading from and writing to a JSON file using the GSON library.
 """
+
 class AddressBookProblem:
-    """"Ability to create a Contacts in Address Book with first and last names, address, 
+    """Ability to create a Contacts in Address Book with first and last names, address, 
     city, state, zip, phone number and email"""
-    
+
     def __init__(self):
         self.contacts = []
 
@@ -85,97 +87,120 @@ class AddressBookProblem:
                 print("Contact removed")
                 return
         print("No contact found")
-        
-    # search by city
+
     def search_city(self):
-        city = input("enter city name :").strip()
-        found =False
+        city = input("Enter city name: ").strip()
+        found = False
         for contact in self.contacts:
             if contact["city"].lower() == city.lower():
-                print(self.display_contact)
+                print(contact)
                 found = True
         if not found:
-                print("No Contact is present ")
-    
+            print("No contact is present")
+
     def view_by_city(self):
-        city = input("enter city name :").strip()
-        found =False
+        city = input("Enter city name: ").strip()
+        found = False
         for contact in self.contacts:
             if contact["city"].lower() == city.lower():
-                print(f"Yes, there is a person in this {city} .")
+                print(f"Yes, there is a person in this {city}.")
+                found = True
         if not found:
-                print("No person is present ")
-        
+            print("No person is present")
+
     def count_person(self):
-        
         count = 0
         city = input("Enter name of your city: ").strip()
         for c in self.contacts:
             if c["city"].lower() == city.lower():
                 count += 1
+        print(f"Total count: {count}")
         return count
 
     def sort_name(self):
-        #  using lambda function 
-        sorted_contacts =sorted(self.contacts,key=lambda x:x["first_name"].lower())
+        sorted_contacts = sorted(self.contacts, key=lambda x: x["first_name"].lower())
         return sorted_contacts
-    
+
     def sort_by_city(self):
-        sorted_contacts = sorted(self.contacts,key=lambda x:x["city","zip","state"].lower())
+        sorted_contacts = sorted(self.contacts, key=lambda x: (x["city"].lower(), x["state"].lower(), x["zip"]))
         return sorted_contacts
-              
-    # sorted_contacts = sorted(self.contacts, key=lambda x: (x["city"].lower(), x["zip"].lower(), x["state"].lower()))
-    
-# creating a new class and using it as creating new book
+    #  use case 13
+
+    def read_file(self, filename):
+        try:
+            with open(filename, "r") as f:
+                file_handler = f.read()
+                print(file_handler)
+        except FileNotFoundError:
+            print("File not found.")
+
+    def write_file(self, filename):
+        with open(filename, "w") as f:
+            f.write("This is some data. Writing.")
+
 class NewAddressBook:
-    def __init__(self) -> None:
-        self.books= {}
+    def __init__(self):
+        self.books = {}
+
     def new_book(self):
-        book_name = input("please Enter name of your book  : ")
-        if book_name == self.books:
-            print(" Book present already")
+        book_name = input("Please enter the name of your book: ")
+        if book_name in self.books:
+            print("Book already exists")
         else:
             self.books[book_name] = AddressBookProblem()
-            print(" New book created")
-    def get_book(self,book_name):
-        print(book_name)
-        return self.books.get(book_name,None)
-    
-    def duplicate_entry(self,contact):
-        first_name = input("Enter your first name: ")
-        last_name = input("Enter your last name: ")
-        for contact in self.contacts:
-                if (contact['first_name'].lower() == first_name.lower() and 
-                        contact['last_name'].lower() == last_name.lower()):
-                    print("Contact with this name already exists.")
-                    return  
+            print("New book created")
 
-    
-        
+    def get_book(self, book_name):
+        return self.books.get(book_name, None)
+
+    def duplicate_entry(self, book, contact):
+        first_name = contact["first_name"]
+        last_name = contact["last_name"]
+        for existing_contact in book.contacts:
+            if existing_contact["first_name"].lower() == first_name.lower() and existing_contact["last_name"].lower() == last_name.lower():
+                print("Contact with this name already exists.")
+                return True
+        return False
+
+    def display_books(self):
+        if not self.books:
+            print("No books are present")
+        else:
+            for book_name in self.books:
+                print(book_name)
+
+
+
+
 def main():
     address_book_system = AddressBookProblem()
     new_address_book = NewAddressBook()
+
     print("\n****_____WELCOME TO ADDRESS BOOK PROBLEM_____*****")
     print("\n")
     while True:
         print("\n OPTIONS :- ")
-        print("1.  EXIT")        
-        print("2.  ADD NEW CONTACT")
-        print("3.  DISPLAY CONTACT")
-        print("4.  EDIT CONTACT")
-        print("5.  DELETE CONTACT")
-        print("6.  ADD NEW ADDRESS BOOK")
-        print("7.  ADD DETAILS TO ADDRESS BOOK ")
-        print("8.  SEARCH BY CITY")
-        print("9.  COUNT PERSON")
+        print("1. EXIT")
+        print("2. ADD NEW CONTACT")
+        print("3. DISPLAY CONTACT")
+        print("4. EDIT CONTACT")
+        print("5. DELETE CONTACT")
+        print("6. ADD NEW ADDRESS BOOK")
+        print("7. ADD DETAILS TO ADDRESS BOOK")
+        print("8. SEARCH BY CITY")
+        print("9. COUNT PERSON")
         print("10. PRINT CONTACT IN SORTED ORDER")
         print("11. SORTED BY CITY NAME")
+        print("12. SORT CITY NAME")
+        print("13. I/O File")
+        print("14. json")
+        print("15. csv file")
         choice = input("Enter your choice in numbers: ")
         if choice == '1':
             print("Exiting the program")
             break
         elif choice == '2':
-            print("\n Add your details:")
+            print("\nAdd your details:")
             address_book_system.create_contact()
         elif choice == '3':
             address_book_system.display_contact()
@@ -186,45 +211,66 @@ def main():
         elif choice == '6':
             new_address_book.new_book()
         elif choice == '7':
-            book_name = input(" Enter a book name you want to use : ")
+            new_address_book.display_books()
+            book_name = input("Enter the book name you want to use: ")
             book = new_address_book.get_book(book_name)
-            
             if book:
                 while True:
-                    print("1. EXIT")        
+                    print("\n1. EXIT")
                     print("2. ADD NEW CONTACT")
-                    sub_choice = input("enter your choice :")
+                    sub_choice = input("Enter your choice: ")
                     if sub_choice == '1':
-                        print("Exit")
+                        print("Exiting book menu")
                         break
                     elif sub_choice == '2':
-                        print("Availabe contact books are ")
-                        new_address_book.get_book()
-                        print("enter your address book details ")
-                        
+                        print("Enter your address book details:")
                         book.create_contact()
                     else:
-                        print("INVALID INPUT ")
+                        print("INVALID INPUT")
+            else:
+                print("Book not found")
         elif choice == '8':
             address_book_system.search_city()
-        elif choice =='9':
-            count = address_book_system.count_person()
-            print(f"Total count: {count}")
-        elif choice =='10':
+        elif choice == '9':
+            address_book_system.count_person()
+        elif choice == '10':
             sorted_contacts = address_book_system.sort_name()
             print("Sorted contacts:")
             for contact in sorted_contacts:
                 print(contact)
-        elif choice =='11':
+        elif choice == '11':
             sorted_contacts = address_book_system.sort_by_city()
             print("Sorted contacts:")
             for contact in sorted_contacts:
                 print(contact)
+        elif choice == '12':
+            address_book_system.sort_by_city()
             
-        
-                                                        
+        elif choice == '13':
+            while True:
+                print("1.read file:")
+                print("2.write file:")
+                print("3.exit :")
+                sub_choice = input("enter your choice")
+
+                if sub_choice == '1':
+                    print("reading file ")
+                
+                    address_book_system.read_file()
+                elif sub_choice == '2':
+                    print("write in file")
+                    address_book_system.write_file()
+                elif sub_choice == '3':
+                    print("exiting")
+                    break
+        elif choice == '14':
+            pass
+        elif choice == '15':
+            pass
+            
         else:
-            print("\n INVALID CHOICE, TRY AGAIN")
+            print("\nINVALID CHOICE, TRY AGAIN")
+
 
 if __name__ == "__main__":
     main()
