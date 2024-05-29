@@ -10,7 +10,8 @@
 @Title: Address book problem
 
 '''
-import file_handler
+import json
+import csv
 """
 UC 1-4: Basic functionalities such as adding, editing, and deleting contacts in the address book.
 UC 5: Adding support for multiple address books.
@@ -137,6 +138,27 @@ class AddressBookProblem:
     def write_file(self, filename):
         with open(filename, "w") as f:
             f.write("This is some data. Writing.")
+    
+    def read_json(self, filename):
+        try:
+            with open(filename, 'r') as file:
+                data = json.load(file)
+                self.contacts = data.get('contacts', [])
+                print("Address book loaded from JSON file successfully.")
+        except FileNotFoundError:
+            print("File not found.")
+        except json.JSONDecodeError:
+            print("Error decoding JSON.")
+
+    def write_json(self, filename):
+        data = {'contacts': self.contacts}
+        try:
+            with open(filename, 'w') as file:
+                json.dump(data, file, indent=4)
+                print("Address book written to JSON file successfully.")
+        except IOError:
+            print("Error writing to file.")
+
 
 class NewAddressBook:
     def __init__(self):
@@ -171,10 +193,10 @@ class NewAddressBook:
 
 
 
-
 def main():
     address_book_system = AddressBookProblem()
     new_address_book = NewAddressBook()
+    
 
     print("\n****_____WELCOME TO ADDRESS BOOK PROBLEM_____*****")
     print("\n")
@@ -264,9 +286,11 @@ def main():
                     print("exiting")
                     break
         elif choice == '14':
-            pass
+            address_book_system.read_json("address_book_system")
+            address_book_system.write_json("address_book_system")
         elif choice == '15':
-            pass
+            address_book_system.read_csv()
+            address_book_system.write_csv()
             
         else:
             print("\nINVALID CHOICE, TRY AGAIN")
