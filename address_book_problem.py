@@ -24,6 +24,7 @@ UC 11: Sorting entries by city, state, or zip code.
 UC 12: Reading from and writing to a file using Java file I/O.
 UC 13: Reading from and writing to a CSV file using the OpenCSV library.
 UC 14: Reading from and writing to a JSON file using the GSON library.
+
 """
 
 class AddressBookProblem:
@@ -158,6 +159,29 @@ class AddressBookProblem:
                 print("Address book written to JSON file successfully.")
         except IOError:
             print("Error writing to file.")
+            
+            
+    def read_csv(self, filename):
+        try:
+            with open(filename, 'r', newline='') as file:
+                reader = csv.DictReader(file)
+                self.contacts = list(reader)
+                print("Address book loaded from CSV file successfully.")
+        except FileNotFoundError:
+            print("File not found.")
+        except csv.Error:
+            print("Error reading CSV file.")
+
+    def write_csv(self, filename):
+        fieldnames = self.contacts[0].keys() if self.contacts else []
+        try:
+            with open(filename, 'w', newline='') as file:
+                writer = csv.DictWriter(file, fieldnames=fieldnames)
+                writer.writeheader()
+                writer.writerows(self.contacts)
+                print("Address book written to CSV file successfully.")
+        except IOError:
+            print("Error writing to file.")
 
 
 class NewAddressBook:
@@ -251,20 +275,25 @@ def main():
                         print("INVALID INPUT")
             else:
                 print("Book not found")
+                
         elif choice == '8':
             address_book_system.search_city()
+            
         elif choice == '9':
             address_book_system.count_person()
+            
         elif choice == '10':
             sorted_contacts = address_book_system.sort_name()
             print("Sorted contacts:")
             for contact in sorted_contacts:
                 print(contact)
+                
         elif choice == '11':
             sorted_contacts = address_book_system.sort_by_city()
             print("Sorted contacts:")
             for contact in sorted_contacts:
                 print(contact)
+                
         elif choice == '12':
             address_book_system.sort_by_city()
             
@@ -278,19 +307,21 @@ def main():
                 if sub_choice == '1':
                     print("reading file ")
                 
-                    address_book_system.read_file()
+                    address_book_system.read_file("address_book_system")
                 elif sub_choice == '2':
                     print("write in file")
-                    address_book_system.write_file()
+                    address_book_system.write_file("address_book_system")
                 elif sub_choice == '3':
                     print("exiting")
                     break
+                
         elif choice == '14':
             address_book_system.read_json("address_book_system")
             address_book_system.write_json("address_book_system")
+            
         elif choice == '15':
-            address_book_system.read_csv()
-            address_book_system.write_csv()
+            address_book_system.read_csv("address_book_system")
+            address_book_system.write_csv("address_book_system")
             
         else:
             print("\nINVALID CHOICE, TRY AGAIN")
