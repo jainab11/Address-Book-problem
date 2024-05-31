@@ -35,6 +35,17 @@ class AddressBookProblem:
         self.contacts = []
 
     def create_contact(self, contact=None):
+        """
+    Description:
+            This function is use for creating new contact in address book and if the contact is present it
+            allows to edit thw contact by reusing this code.
+    Parameters: 
+        self: The instance of the class.
+    Return:
+        None.
+
+        
+        """
         if contact is None:
             contact = {
                 "first_name": input("Enter your first name: "),
@@ -53,12 +64,21 @@ class AddressBookProblem:
             contact["address"] = input(f"Enter new address [{contact['address']}]: ") or contact["address"]
             contact["city"] = input(f"Enter new city [{contact['city']}]: ") or contact["city"]
             contact["state"] = input(f"Enter new state [{contact['state']}]: ") or contact["state"]
-            contact["zip"] = input(f"Enter new zip code [{contact['zip']}]: ") or contact["zip"]
-            contact["phone_number"] = input(f" Enter new phone number [{contact['phone_number']}]: ") or contact["phone_number"]
+            contact["zip"] = int(input(f"Enter new zip code [{contact['zip']}]: ")) or contact["zip"]
+            contact["phone_number"] = int(input(f" Enter new phone number [{contact['phone_number']}]: ")) or contact["phone_number"]
             contact["email"] = input(f"Enter new email [{contact['email']}]: ") or contact["email"]
             print("\nContact updated")
 
     def display_contact(self):
+        """
+    Description:
+            This function is use for displaying the contacts
+    Parameters: 
+        self: The instance of the class.
+    Return:
+        None. This methond print all contact anf if not present it print no contact found
+    
+        """
         if not self.contacts:
             print("No contact is present")
         else:
@@ -72,6 +92,19 @@ class AddressBookProblem:
                 print(f"Email: {contact['email']}\n")
 
     def edit_contact(self):
+        """
+    Description:
+            This function allows editing of an existing contact in the address book. 
+            The user is prompted to enter the first and last name of the contact to be edited. 
+            If a matching contact is found, the user is prompted to update the contact details.
+
+    Parameters: 
+        self: The instance of the class.
+
+    Return:
+        None. This method updates the contact information if a matching contact is found.
+   
+        """
         first_name = input("Enter your first name: ")
         last_name = input("Enter your last name: ")
         for contact in self.contacts:
@@ -81,6 +114,17 @@ class AddressBookProblem:
         print("No contact found")
 
     def delete_contact(self):
+        """
+        Description:
+            This function is used for deleting contact if it is present in address book
+            
+        Parameters: 
+        self: The instance of the class.
+        
+        Return:
+            None. This method delete the contact if present and if not it print no contact is found
+        
+        """
         first_name = input("Enter your first name: ")
         last_name = input("Enter your last name: ")
         for contact in self.contacts:
@@ -91,6 +135,19 @@ class AddressBookProblem:
         print("No contact found")
 
     def search_city(self):
+        """
+        Description:
+            This function searches for contacts in the address book that are located 
+        in the specified city and prints their details.
+        
+        Parameters: 
+        self: The instance of the class.
+        
+        Return:
+            None. This method prints the details of contacts found in the specified city 
+        or a message indicating no contacts are present.
+        
+        """
         city = input("Enter city name: ").strip()
         found = False
         for contact in self.contacts:
@@ -101,6 +158,18 @@ class AddressBookProblem:
             print("No contact is present")
 
     def view_by_city(self):
+        """ 
+        Description:
+            This function searches for and displays whether there are any contacts 
+        in the address book that are located in the specified city.
+
+    Parameters: 
+        self: The instance of the class.
+        
+    Return:
+        None. This method prints a message indicating whether any contacts 
+        are found in the specified city.
+        """
         city = input("Enter city name: ").strip()
         found = False
         for contact in self.contacts:
@@ -111,6 +180,16 @@ class AddressBookProblem:
             print("No person is present")
 
     def count_person(self):
+        """
+        Description:
+        This function used for counting number of person present in the address book
+
+    Parameters: 
+        self: The instance of the class.
+        
+    Return:
+        number of person present in address book
+        """
         count = 0
         city = input("Enter name of your city: ").strip()
         for c in self.contacts:
@@ -120,15 +199,50 @@ class AddressBookProblem:
         return count
 
     def sort_name(self):
+        
+        """
+    Description:
+        This function is use for print contact in sorted order by first name and last name of the user
+
+    Parameters: 
+        self: The instance of the class.
+        
+    Return:
+        contcat is sorted order by name
+
+        """
         sorted_contacts = sorted(self.contacts, key=lambda x: x["first_name"].lower())
         return sorted_contacts
 
     def sort_by_city(self):
+        """
+    Description:
+        This function is use for print contact in sorted order by user city name
+
+    Parameters: 
+        self: The instance of the class.
+        
+    Return:
+        contact is sorted order by city name
+        """
         sorted_contacts = sorted(self.contacts, key=lambda x: (x["city"].lower(), x["state"].lower(), x["zip"]))
         return sorted_contacts
     #  use case 13
 
     def read_file(self, filename):
+        """
+    Description:
+            This function open a text file and you can read that file
+
+    Parameters: 
+        self: The instance of the class.
+        filename: The name of the txt file to read the contact information to.
+
+    Return:
+        None. This method read the contacts to the txt file and prints a message 
+        upon successful write operation or an error message if an exception occurs.
+
+        """
         try:
             with open(filename, "r") as f:
                 file_handler = f.read()
@@ -137,49 +251,120 @@ class AddressBookProblem:
             print("File not found.")
 
     def write_file(self, filename):
+        """
+    Description:
+        This function writes the contacts to a txt  file. It creates a txt file 
+        with the specified filename and writes the contact information into it.
+
+    Parameters: 
+        self: The instance of the class.
+        filename: The name of the txt file to write the contact information to.
+
+    Return:
+        None. This method writes the contacts to the txt file and prints a message 
+        
+
+        """
+        
         with open(filename, "w") as f:
             f.write("This is some data. Writing.")
+            
     
     def read_json(self, filename):
+        """
+    Description:
+            This function open a json file and you can read that file
+
+    Parameters: 
+        self: The instance of the class.
+        filename: The name of the json file to read the contact information to.
+
+    Return:
+        None. This method read the contacts to the json file and prints a message 
+        upon successful write operation or an error message if an exception occurs.
+
+        """
+        
         try:
             with open(filename, 'r') as file:
                 data = json.load(file)
                 self.contacts = data.get('contacts', [])
-                print("Address book loaded from JSON file successfully.")
+                print("read json file")
         except FileNotFoundError:
             print("File not found.")
         except json.JSONDecodeError:
             print("Error decoding JSON.")
 
     def write_json(self, filename):
+        """
+    Description:
+        This function writes the contacts to a json file. It creates a json file 
+        with the specified filename and writes the contact information into it.
+
+    Parameters: 
+        self: The instance of the class.
+        filename: The name of the json file to write the contact information to.
+
+    Return:
+        None. This method writes the contacts to the json file and prints a message 
+        upon successful write operation or an error message if an exception occurs.
+
+        """
         data = {'contacts': self.contacts}
         try:
             with open(filename, 'w') as file:
                 json.dump(data, file, indent=4)
-                print("Address book written to JSON file successfully.")
+                print("write in json file.")
         except IOError:
             print("Error writing to file.")
             
             
     def read_csv(self, filename):
+        """
+    Description:
+            This function open a csv file and you can read that file
+
+    Parameters: 
+        self: The instance of the class.
+        filename: The name of the CSV file to read the contact information to.
+
+    Return:
+        None. This method read the contacts to the CSV file and prints a message 
+        upon successful write operation or an error message if an exception occurs.
+
+        """
         try:
             with open(filename, 'r', newline='') as file:
                 reader = csv.DictReader(file)
                 self.contacts = list(reader)
-                print("Address book loaded from CSV file successfully.")
+                print("csv file read.")
         except FileNotFoundError:
             print("File not found.")
         except csv.Error:
             print("Error reading CSV file.")
 
     def write_csv(self, filename):
+        """
+    Description:
+        This function writes the contacts to a CSV file. It creates a CSV file 
+        with the specified filename and writes the contact information into it.
+
+    Parameters: 
+        self: The instance of the class.
+        filename: The name of the CSV file to write the contact information to.
+
+    Return:
+        None. This method writes the contacts to the CSV file and prints a message 
+        upon successful write operation or an error message if an exception occurs.
+
+        """
         fieldnames = self.contacts[0].keys() if self.contacts else []
         try:
             with open(filename, 'w', newline='') as file:
                 writer = csv.DictWriter(file, fieldnames=fieldnames)
                 writer.writeheader()
                 writer.writerows(self.contacts)
-                print("Address book written to CSV file successfully.")
+                print("Write to csv.")
         except IOError:
             print("Error writing to file.")
 
@@ -189,6 +374,16 @@ class NewAddressBook:
         self.books = {}
 
     def new_book(self):
+        """
+        Description:
+             This function use for creating book in address book
+        Parameters: 
+            Self object as a parameter.
+       
+        Return:
+            none. check if book exist else create anew book
+        """
+        
         book_name = input("Please enter the name of your book: ")
         if book_name in self.books:
             print("Book already exists")
@@ -197,9 +392,21 @@ class NewAddressBook:
             print("New book created")
 
     def get_book(self, book_name):
+        " this function get the book name "
         return self.books.get(book_name, None)
 
     def duplicate_entry(self, book, contact):
+        """
+        Description:
+             This function checks if a contact with the same first and last name 
+             already exists in the given address book, preventing duplicate entries
+        Parameters: 
+            Self object as a parameter.
+            book: address book where it will check for duplicates entry
+            contact: get the contact details from dictionary first_name and last_name
+        Return:
+            bool: Return true  if duplicate entry is fount else false 
+        """
         first_name = contact["first_name"]
         last_name = contact["last_name"]
         for existing_contact in book.contacts:
@@ -209,6 +416,16 @@ class NewAddressBook:
         return False
 
     def display_books(self):
+        """
+         Description:
+            This function is used to display the names of all the address books available.
+         Parameters: 
+            Self object as a parameter.
+
+         Return:
+            None. This method prints the names of all address books or a message indicating no books are present.  
+        """
+        
         if not self.books:
             print("No books are present")
         else:
@@ -299,29 +516,56 @@ def main():
             
         elif choice == '13':
             while True:
-                print("1.read file:")
-                print("2.write file:")
-                print("3.exit :")
-                sub_choice = input("enter your choice")
+                print("1.read file : ")
+                print("2.write file : ")
+                print("3.exit : ")
+                sub_choice = input("enter your choice: ")
 
                 if sub_choice == '1':
                     print("reading file ")
                 
-                    address_book_system.read_file("address_book_system")
+                    address_book_system.read_file("address_book_system.txt")
                 elif sub_choice == '2':
                     print("write in file")
-                    address_book_system.write_file("address_book_system")
+                    address_book_system.write_file("address_book_system.txt")
                 elif sub_choice == '3':
                     print("exiting")
                     break
                 
         elif choice == '14':
-            address_book_system.read_json("address_book_system")
-            address_book_system.write_json("address_book_system")
-            
+            while True:
+                print("1.read file : ")
+                print("2.write file : ")
+                print("3.exit : ")
+                sub1_choice = input("enter your choice : ")
+
+                if sub1_choice == '1':
+                    print("reading file ")
+                
+                    address_book_system.read_json("address_book_system.json")
+                elif sub1_choice == '2':
+                    print("write in file")
+                    address_book_system.write_json("address_book_system.json")
+                elif sub1_choice == '3':
+                    print("exiting")
+                    break
         elif choice == '15':
-            address_book_system.read_csv("address_book_system")
-            address_book_system.write_csv("address_book_system")
+           while True:
+                print("1.read file : ")
+                print("2.write file : ")
+                print("3.exit : ")
+                sub2_choice = input("enter your choice : ")
+
+                if sub2_choice == '1':
+                    print("reading file ")
+                
+                    address_book_system.read_csv("address_book_system.csv")
+                elif sub2_choice == '2':
+                    print("write in file")
+                    address_book_system.write_csv("address_book_system.csv")
+                elif sub2_choice == '3':
+                    print("exiting")
+                    break
             
         else:
             print("\nINVALID CHOICE, TRY AGAIN")
